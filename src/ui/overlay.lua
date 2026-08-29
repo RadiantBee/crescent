@@ -1,10 +1,6 @@
 -- Importing ui element classes
 local uiElement = require("src/ui/uiElement")
 local Button = require("src/ui/button")
-local ProgressBar = require("src/ui/progressBar")
-local Entry = require("src/ui/entry")
-local Slider = require("src/ui/slider")
-local Label = require("src/ui/label")
 local utils = require("src/utils")
 
 local Overlay = setmetatable({}, uiElement)
@@ -54,16 +50,16 @@ Overlay.configureHeader = function(self, title, isMovable, isHidable, isCloseabl
 
 	if self.isCloseable then
 		offsetCounter = offsetCounter + 20
-		self.closeButton = self:newButton(self.width - 20, -20, 20, 20, "X", function(self)
+		self.closeButton = self:addObj(Button:new(self.width - 20, -20, 20, 20, "X", function(self)
 			self.isActive = false
-		end, self)
+		end, self))
 		self.closeButton.textX = 6
 		self.closeButton.colorHighlighted = { 1, 0, 0 }
 	end
 
 	if self.isHidable then
 		offsetCounter = offsetCounter + 20
-		self.hideButton = self:newButton(self.width - 40, -20, 20, 20, "^", function(self)
+		self.hideButton = self:addObj(Button:new(self.width - 40, -20, 20, 20, "^", function(self)
 			if self.isHidden then
 				self.hideButton.text = "^"
 				self.hideButton.textX = 5
@@ -72,11 +68,11 @@ Overlay.configureHeader = function(self, title, isMovable, isHidable, isCloseabl
 				self.hideButton.textX = 6
 			end
 			self.isHidden = not self.isHidden
-		end, self)
+		end, self))
 		self.hideButton.textX = 5
 	end
 
-	self.titleBlock = self:newButton(0, -20, self.width - offsetCounter, 20, self.title)
+	self.titleBlock = self:addObj(Button:new(0, -20, self.width - offsetCounter, 20, self.title))
 	self.titleBlock.update = function(self, dt, mouseX, mouseY) end
 
 	if self.isMovable then
@@ -99,58 +95,10 @@ Overlay.configureHeader = function(self, title, isMovable, isHidable, isCloseabl
 	end
 end
 
-Overlay.newObj = function(self, obj)
+Overlay.addObj = function(self, obj)
 	utils.addToList(self.elements, obj)
 	obj.parent = self
 	return obj
-end
-
-Overlay.newButton = function(self, x, y, width, height, text, func, funcArgs)
-	local button = Button:new(x, y, width, height, text, func, funcArgs)
-	utils.addToList(self.elements, button)
-	button.parent = self
-	return button
-end
-
-Overlay.newSlider = function(self, x, y, width, height, maxValue, bWidth, bHeight, value, showText, color)
-	local slider = Slider:new(x, y, width, height, maxValue, bWidth, bHeight, value, showText, color)
-	utils.addToList(self.elements, slider)
-	slider.parent = self
-	return slider
-end
-
-Overlay.newProgressBar = function(self, x, y, width, height, maxValue, value, showText, color)
-	local progressBar = ProgressBar:new(x, y, width, height, maxValue, value, showText, color)
-	utils.addToList(self.elements, progressBar)
-	progressBar.parent = self
-	return progressBar
-end
-Overlay.newLabel = function(self, x, y, text)
-	local label = Label:new(text, x, y)
-	utils.addToList(self.elements, label)
-	label.parent = self
-	return label
-end
-
-Overlay.newEntry = function(self, x, y, width, height, onEnterFunc, onEnterFuncArgs)
-	local entry = Entry:new(x, y, width, height, onEnterFunc, onEnterFuncArgs)
-	utils.addToList(self.elements, entry)
-	entry.parent = self
-	return entry
-end
-
-Overlay.newElement = function(self)
-	local elem = uiElement:new()
-	utils.addToList(self.elements, elem)
-	elem.parent = self
-	return elem
-end
-
-Overlay.newOverlay = function(self, x, y, width, height, isActive)
-	local ov = Overlay:new(x, y, width, height, isActive)
-	utils.addToList(self.elements, ov)
-	ov.parent = self
-	return ov
 end
 
 Overlay.add = function(self, obj) -- preferably for overlays

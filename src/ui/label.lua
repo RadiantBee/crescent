@@ -17,7 +17,7 @@ Label.new = function(self, text, x, y)
 	return obj
 end
 
-Label.dynamicText = nil
+Label.updateText = nil
 
 Label.draw = function(self, x, y)
 	self.x = self.ox + x
@@ -25,8 +25,8 @@ Label.draw = function(self, x, y)
 	if self.hide then
 		return
 	end
-	if self.dynamicText then
-		self:dynamicText()
+	if self.updateText then
+		self:updateText()
 	end
 	love.graphics.print(self.text, self.x, self.y)
 end
