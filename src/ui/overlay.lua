@@ -99,6 +99,12 @@ Overlay.configureHeader = function(self, title, isMovable, isHidable, isCloseabl
 	end
 end
 
+Overlay.newObj = function(self, obj)
+	utils.addToList(self.elements, obj)
+	obj.parent = self
+	return obj
+end
+
 Overlay.newButton = function(self, x, y, width, height, text, func, funcArgs)
 	local button = Button:new(x, y, width, height, text, func, funcArgs)
 	utils.addToList(self.elements, button)
