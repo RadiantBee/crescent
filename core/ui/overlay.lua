@@ -1,7 +1,7 @@
 -- Importing ui element classes
-local uiElement = require("src/ui/uiElement")
-local Button = require("src/ui/button")
-local utils = require("src/utils")
+local uiElement = require("core/ui/uiElement")
+local Button = require("core/ui/button")
+local utils = require("core/utils")
 
 local Overlay = setmetatable({}, uiElement)
 Overlay.__index = Overlay
@@ -97,13 +97,11 @@ end
 
 Overlay.addObj = function(self, obj)
 	utils.addToList(self.elements, obj)
-	obj.parent = self
 	return obj
 end
 
 Overlay.add = function(self, obj) -- preferably for overlays
 	utils.addToList(self.elements, obj)
-	obj.parent = self
 	if obj.elements then -- safeguard in case it's not overlay
 		for i = #obj.elements, 1, -1 do -- invoking load
 			obj.elements[i]:load()
@@ -150,6 +148,7 @@ Overlay.mousepressed = function(self, x, y, button)
 	self.mousepressWasProcessed = true
 	return self.mousepressWasProcessed
 end
+
 Overlay.mousereleased = function(self, x, y, button)
 	self.mousereleaseWasProcessed = false
 	if not self.isActive then
@@ -210,6 +209,7 @@ Overlay.update = function(self, dt, mouseX, mouseY)
 		self.elements[i]:update(dt, mouseX, mouseY)
 	end
 end
+
 Overlay.draw = function(self, x, y)
 	if not self.isActive then
 		return

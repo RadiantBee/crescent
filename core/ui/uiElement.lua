@@ -17,6 +17,15 @@ end
 uiElement.keypressed = function(self, key)
 	return false
 end
+
+uiElement.mousemoved = function(x, y, dx, dy)
+	return false
+end
+
+uiElement.textinput = function(text)
+	return false
+end
+
 uiElement.update = function(self, dt, mouseX, mouseY) end
 uiElement.draw = function(self, x, y) end
 

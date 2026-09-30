@@ -1,4 +1,4 @@
-local uiElement = require("src/ui/uiElement")
+local uiElement = require("core/ui/uiElement")
 
 local ProgressBar = setmetatable({}, uiElement)
 ProgressBar.__index = ProgressBar

@@ -1,5 +1,5 @@
-local ProgressBar = require("src/ui/progressBar")
-local Button = require("src/ui/button")
+local ProgressBar = require("core/ui/progressBar")
+local Button = require("core/ui/button")
 
 local Slider = setmetatable({}, ProgressBar)
 Slider.__index = Slider

@@ -1,4 +1,4 @@
-local uiElement = require("src/ui/uiElement")
+local uiElement = require("core/ui/uiElement")
 
 local Button = setmetatable({}, uiElement)
 Button.__index = Button
